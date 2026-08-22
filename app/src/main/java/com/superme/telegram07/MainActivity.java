@@ -18,29 +18,43 @@ public class MainActivity extends Activity {
         new AlertDialog.Builder(this)
                 .setTitle("Services")
                 .setItems(items, (dialog, which) -> {
-                    switch (which) {
-                        case 0: load("Stars", ServicesClient::stars); break;
-                        case 1: load("Premium", ServicesClient::premium); break;
-                        case 2: load("Business", ServicesClient::business); break;
-                        case 3: load("Gifts", ServicesClient::gifts); break;
-                    }
+                    if (which == 0) loadStars();
+                    else if (which == 1) loadPremium();
+                    else if (which == 2) loadBusiness();
+                    else loadGifts();
                 }).show();
     }
 
-    private void load(String name, ServicesClient.Callback request) {
-        Toast.makeText(this, name + " xizmatiga ulanmoqda…", Toast.LENGTH_SHORT).show();
-        requestWithResult(name, request);
+    private boolean ready() {
+        if (BuildConfig.SERVICES_BASE_URL.contains("YOUR-SERVICES-SERVER")) {
+            toast("Services server URLini app/build.gradle ichida kiriting");
+            return false;
+        }
+        return true;
     }
 
-    private void requestWithResult(String name, ServicesClient.Callback request) {
-        request.onResult(false, "Services server URL is not configured.");
-        // Each method in ServicesClient performs its own background request. This second call
-        // is intentionally avoided; callers should configure SERVICES_BASE_URL before use.
-        if (BuildConfig.SERVICES_BASE_URL.contains("YOUR-SERVICES-SERVER")) return;
-        if (name.equals("Stars")) ServicesClient.stars((ok, body) -> result(name, ok, body));
-        else if (name.equals("Premium")) ServicesClient.premium((ok, body) -> result(name, ok, body));
-        else if (name.equals("Business")) ServicesClient.business((ok, body) -> result(name, ok, body));
-        else ServicesClient.gifts((ok, body) -> result(name, ok, body));
+    private void loadStars() {
+        if (!ready()) return;
+        toast("Stars xizmatiga ulanmoqda…");
+        ServicesClient.stars((ok, body) -> result("Stars", ok, body));
+    }
+
+    private void loadPremium() {
+        if (!ready()) return;
+        toast("Premium xizmatiga ulanmoqda…");
+        ServicesClient.premium((ok, body) -> result("Premium", ok, body));
+    }
+
+    private void loadBusiness() {
+        if (!ready()) return;
+        toast("Business xizmatiga ulanmoqda…");
+        ServicesClient.business((ok, body) -> result("Business", ok, body));
+    }
+
+    private void loadGifts() {
+        if (!ready()) return;
+        toast("Gifts xizmatiga ulanmoqda…");
+        ServicesClient.gifts((ok, body) -> result("Gifts", ok, body));
     }
 
     private void result(String name, boolean ok, String body) {
