@@ -1,0 +1,5 @@
+plugins { id 'com.android.application' }
+
+android { namespace 'com.superme.telegram07'; compileSdk 35
+    defaultConfig { applicationId 'com.superme.telegram07'; minSdk 23; targetSdk 35; versionCode 1; versionName '1.0' }
+}
