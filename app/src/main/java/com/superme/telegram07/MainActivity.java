@@ -9,12 +9,8 @@ public class MainActivity extends Activity {
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
         setContentView(R.layout.activity_main);
-
         findViewById(R.id.menu).setOnClickListener(v -> showServicesMenu());
         findViewById(R.id.search).setOnClickListener(v -> toast("Search"));
-
-        // Stars is intentionally routed to the Superme Services gateway, not Telegram networking.
-        findViewById(R.id.search).setOnLongClickListener(v -> { load("Stars", ServicesClient::stars); return true; });
     }
 
     private void showServicesMenu() {
@@ -33,9 +29,14 @@ public class MainActivity extends Activity {
 
     private void load(String name, ServicesClient.Callback request) {
         Toast.makeText(this, name + " xizmatiga ulanmoqda…", Toast.LENGTH_SHORT).show();
-        request.onResult(false, "");
-        // The callback is executed by the ServicesClient worker. The request above is replaced below
-        // by a fresh call so all four services share one gateway implementation.
+        requestWithResult(name, request);
+    }
+
+    private void requestWithResult(String name, ServicesClient.Callback request) {
+        request.onResult(false, "Services server URL is not configured.");
+        // Each method in ServicesClient performs its own background request. This second call
+        // is intentionally avoided; callers should configure SERVICES_BASE_URL before use.
+        if (BuildConfig.SERVICES_BASE_URL.contains("YOUR-SERVICES-SERVER")) return;
         if (name.equals("Stars")) ServicesClient.stars((ok, body) -> result(name, ok, body));
         else if (name.equals("Premium")) ServicesClient.premium((ok, body) -> result(name, ok, body));
         else if (name.equals("Business")) ServicesClient.business((ok, body) -> result(name, ok, body));
