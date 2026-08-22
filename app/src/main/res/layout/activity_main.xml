@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:background="#FFFFFF">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="64dp" android:gravity="center_vertical" android:paddingStart="18dp" android:paddingEnd="12dp">
+        <TextView android:id="@+id/menu" android:layout_width="48dp" android:layout_height="48dp" android:gravity="center" android:text="☰" android:textSize="24sp" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="10dp" android:text="Telegram" android:textSize="20sp" android:textStyle="bold" android:textColor="#222222" />
+        <TextView android:id="@+id/search" android:layout_width="48dp" android:layout_height="48dp" android:gravity="center" android:text="⌕" android:textSize="28sp" />
+    </LinearLayout>
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#E6E6E6" />
+    <ScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingTop="4dp">
+            <include layout="@layout/chat_row" />
+            <include layout="@layout/chat_row" />
+            <include layout="@layout/chat_row" />
+            <include layout="@layout/chat_row" />
+            <include layout="@layout/chat_row" />
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="64dp" android:gravity="center" android:weightSum="4" android:background="#FFFFFF">
+        <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="💬\nChats" android:textSize="12sp" />
+        <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="👥\nContacts" android:textSize="12sp" />
+        <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="⚙\nSettings" android:textSize="12sp" />
+        <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="⭐\nStars" android:textSize="12sp" />
+    </LinearLayout>
+</LinearLayout>
